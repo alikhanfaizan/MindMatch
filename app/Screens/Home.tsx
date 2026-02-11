@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
@@ -20,7 +14,8 @@ export default function HomeScreen() {
       <View style={styles.topBar}>
         <Ionicons name="arrow-back" size={22} color="#fff" />
         <View style={styles.rightTop}>
-          <Ionicons name="settings-outline" size={18} color="#fff" />
+          <Ionicons name="settings-outline" size={18} color="#fff" 
+          onPress={() => router.push("Screens/Settings")}/>
           <Text style={styles.lang}>EN | GR</Text>
         </View>
       </View>
@@ -49,17 +44,26 @@ export default function HomeScreen() {
         style={styles.startButton}
         onPress={() => router.push("/Screens/Lobby")}
       >
-        <Ionicons name="play" size={18} color="#fff" style={{ marginRight: 8 }} />
+        <Ionicons
+          name="play"
+          size={18}
+          color="#fff"
+          style={{ marginRight: 8 }}
+        />
         <Text style={styles.startText}>START GAME</Text>
       </TouchableOpacity>
 
       {/* Secondary buttons */}
-      <TouchableOpacity style={styles.secondaryButton}>
+      <TouchableOpacity
+        style={styles.secondaryButton}
+        onPress={() => router.push("/Screens/HowToPlay")}
+      >
         <Text style={styles.secondaryText}>HOW TO PLAY</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.secondaryButton}>
-        <Text style={styles.secondaryText}>SETTING</Text>
+      <TouchableOpacity style={styles.secondaryButton}
+      onPress={() => router.push("/Screens/Settings")}>
+        <Text style={styles.secondaryText}>SETTINGS</Text>
       </TouchableOpacity>
 
       {/* Footer */}

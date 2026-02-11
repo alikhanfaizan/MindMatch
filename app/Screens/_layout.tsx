@@ -6,6 +6,8 @@ export default function ScreensLayout() {
       <Stack.Screen name="UserScreen" />
       <Stack.Screen name="Home" />
       <Stack.Screen name="Lobby" />
+      <Stack.Screen name="HowToPlay" />
+      <Stack.Screen name="Settings" />
       
     </Stack>
   );
