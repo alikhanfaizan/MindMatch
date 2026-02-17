@@ -10,13 +10,15 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 
-export default function LobbyScreen() {
+export default function WaitingRoomScreen() {
+  const players = ["Virat", "Dhoni"];
+
   return (
     <LinearGradient
       colors={["#0f1722", "#1b2433", "#0f1722"]}
       style={styles.container}
     >
-      {/* Top Bar */}
+      {/* Top bar */}
       <View style={styles.topBar}>
         <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={22} color="#fff" />
@@ -41,26 +43,43 @@ export default function LobbyScreen() {
         <Text style={styles.redText}>MATCH</Text>
       </Text>
 
-      {/* Section Heading */}
-      <Text style={styles.heading}>Local Multiplayer Lobby</Text>
-
+      {/* Section */}
+      <Text style={styles.heading}>Hosting Lobby</Text>
       <View style={styles.divider} />
 
-      {/* Host Game Button */}
+      {/* Host Device */}
+      <Text style={styles.deviceName}>Rohit's iPhone</Text>
+      <Text style={styles.waitText}>Waiting for players...</Text>
+
+      {/* Player List Card */}
+      <View style={styles.playerCard}>
+        {players.map((p, index) => (
+          <View
+            key={index}
+            style={[
+              styles.playerRow,
+              index !== players.length - 1 && styles.rowDivider,
+            ]}
+          >
+            <Ionicons name="person" size={18} color="#4f7cff" />
+            <Text style={styles.playerName}>{p}</Text>
+          </View>
+        ))}
+      </View>
+
+      {/* Start Button */}
       <TouchableOpacity
-        style={styles.hostButton}
-        onPress={() => router.push("/Screens/HostSetup")}
+        style={styles.startButton}
+        onPress={() => router.push("/Screens/GamePlay")}
       >
-        <Text style={styles.hostText}>HOST GAME</Text>
+        <Ionicons name="chevron-back" size={18} color="#fff" />
+        <Text style={styles.startText}>START</Text>
+        <Ionicons name="chevron-forward" size={18} color="#fff" />
       </TouchableOpacity>
 
-      {/* Join Game Button */}
-      <TouchableOpacity
-        style={styles.joinButton}
-        onPress={() => router.push("/Screens/JoinGame")}
-      >
-        <Text style={styles.joinText}>JOIN GAME</Text>
-      </TouchableOpacity>
+      <Text style={styles.note}>
+        Game starts when at least 2 players are connected
+      </Text>
 
       {/* Footer */}
       <View style={styles.footer}>
@@ -106,7 +125,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "700",
-    marginBottom: 22,
+    marginBottom: 12,
   },
 
   whiteText: {
@@ -121,54 +140,83 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 18,
     fontWeight: "600",
-    marginBottom: 10,
+    marginTop: 10,
   },
 
   divider: {
     width: "80%",
     height: 1,
     backgroundColor: "#3a465c",
-    marginBottom: 40,
-    marginTop: 10,
+    marginVertical: 20,
   },
 
-  hostButton: {
+  deviceName: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+
+  waitText: {
+    color: "#aab3c2",
+    fontSize: 12,
+    marginTop: 4,
+    marginBottom: 16,
+  },
+
+  playerCard: {
+    width: "90%",
+    backgroundColor: "#1c2533",
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: "#3a465c",
+    marginBottom: 24,
+    overflow: "hidden",
+  },
+
+  playerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 14,
+  },
+
+  rowDivider: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#3a465c",
+  },
+
+  playerName: {
+    color: "#ffffff",
+    fontSize: 15,
+    marginLeft: 10,
+  },
+
+  startButton: {
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: "#e53935",
-    width: "85%",
-    height: 58,
+    width: "90%",
+    height: 60,
     borderRadius: 30,
     justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 18,
     shadowColor: "#e53935",
     shadowOpacity: 0.45,
     shadowRadius: 8,
     elevation: 6,
   },
 
-  hostText: {
+  startText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "700",
+    marginHorizontal: 10,
     letterSpacing: 1,
   },
 
-  joinButton: {
-    width: "85%",
-    height: 54,
-    borderRadius: 30,
-    borderWidth: 1,
-    borderColor: "#3a465c",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#1c2533",
-  },
-
-  joinText: {
-    color: "#d0d6e0",
-    fontSize: 14,
-    fontWeight: "600",
-    letterSpacing: 1,
+  note: {
+    color: "#8b97a8",
+    fontSize: 11,
+    marginTop: 8,
+    textAlign: "center",
   },
 
   footer: {

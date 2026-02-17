@@ -8,6 +8,10 @@ export default function ScreensLayout() {
       <Stack.Screen name="Lobby" />
       <Stack.Screen name="HowToPlay" />
       <Stack.Screen name="Settings" />
+      <Stack.Screen name="HostSetup" />
+      <Stack.Screen name="WaitingRoom" />
+      <Stack.Screen name="JoinGame" />
+      <Stack.Screen name="GamePlay" />
       
     </Stack>
   );
