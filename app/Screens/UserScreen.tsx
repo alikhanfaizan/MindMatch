@@ -10,14 +10,20 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
+import GameController from "../../src/controllers/GameController";
 
 export default function UsernameScreen() {
   const [username, setUsername] = useState("");
 
-  const handleContinue = () => {
-    if (!username) return;
-    router.push("/Screens/Home"); // update later
-  };
+
+const handleContinue = async () => {
+  if (!username) return;
+
+  await GameController.registerPlayer(username);
+
+  router.push("/Screens/Home");
+};
+
 
   return (
     <LinearGradient

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,9 +10,36 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
+import RoundManager from "@/src/engine/RoundManager";
+import GameEngine from "@/src/engine/GameEngine";
+import TimeService from "@/src/engine/TimeService";
 
 export default function GamePlayScreen() {
   const [answer, setAnswer] = useState("");
+  const [question, setQuestion] = useState("");
+  const [timer, setTimer] = useState(0);
+  const [round, setRound] = useState(1);
+  useEffect(() => {
+    const loadGameData = setInterval(() => {
+      const q = RoundManager.getCurrentQuestion();
+
+      if (q) {
+        setQuestion(q);
+        clearInterval(loadGameData);
+      }
+    }, 200);
+
+    setRound(GameEngine.getCurrentRound());
+
+    const timerInterval = setInterval(() => {
+      setTimer(TimeService.getRemainingTime());
+    }, 500);
+
+    return () => {
+      clearInterval(loadGameData);
+      clearInterval(timerInterval);
+    };
+  }, []);
 
   return (
     <LinearGradient
@@ -47,16 +74,16 @@ export default function GamePlayScreen() {
       {/* Timer pill */}
       <View style={styles.timer}>
         <Ionicons name="timer-outline" size={18} color="#fff" />
-        <Text style={styles.timerText}>1:00</Text>
+        <Text style={styles.timerText}>
+          {Math.floor(timer / 60)}:{(timer % 60).toString().padStart(2, "0")}
+        </Text>
       </View>
 
       {/* Question index */}
-      <Text style={styles.qIndex}>Questions : 1</Text>
+      <Text style={styles.qIndex}>Questions : {round}</Text>
 
       {/* Question */}
-      <Text style={styles.question}>
-        What has to be broken before you can use it?
-      </Text>
+      <Text style={styles.question}>{question}</Text>
 
       {/* Answer box */}
       <View style={styles.answerBox}>
@@ -74,7 +101,20 @@ export default function GamePlayScreen() {
       <Text style={styles.username}>Player123</Text>
 
       {/* Submit button */}
-      <TouchableOpacity style={styles.submitButton}>
+      <TouchableOpacity
+        style={styles.submitButton}
+        onPress={() => {
+          console.log("📨 Submitting answer...");
+
+          RoundManager.submitAnswer({
+            playerId: "host-player",
+            text: answer,
+            submittedAt: Date.now(),
+          });
+
+          console.log("📨 Answer submitted:", answer);
+        }}
+      >
         <Text style={styles.submitText}>SUBMIT</Text>
       </TouchableOpacity>
     </LinearGradient>

@@ -1,14 +1,10 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
+import GameController from "@/src/controllers/GameController";
+import GameEngine from "@/src/engine/GameEngine";
 
 export default function WaitingRoomScreen() {
   const players = ["Virat", "Dhoni"];
@@ -48,7 +44,7 @@ export default function WaitingRoomScreen() {
       <View style={styles.divider} />
 
       {/* Host Device */}
-      <Text style={styles.deviceName}>Rohit's iPhone</Text>
+      <Text style={styles.deviceName}>Rohit iPhone</Text>
       <Text style={styles.waitText}>Waiting for players...</Text>
 
       {/* Player List Card */}
@@ -70,7 +66,18 @@ export default function WaitingRoomScreen() {
       {/* Start Button */}
       <TouchableOpacity
         style={styles.startButton}
-        onPress={() => router.push("/Screens/GamePlay")}
+        onPress={() => {
+          console.log("🟡 Host pressed START MATCH");
+          GameEngine.joinPlayer({
+            id: "mock-player",
+            username: "TestPlayer",
+            score: 0,
+          });
+
+          GameController.startMatch();
+
+          router.push("/Screens/GamePlay");
+        }}
       >
         <Ionicons name="chevron-back" size={18} color="#fff" />
         <Text style={styles.startText}>START</Text>

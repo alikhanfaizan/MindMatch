@@ -15,7 +15,7 @@ export default function HomeScreen() {
         <Ionicons name="arrow-back" size={22} color="#fff" />
         <View style={styles.rightTop}>
           <Ionicons name="settings-outline" size={18} color="#fff" 
-          onPress={() => router.push("Screens/Settings")}/>
+          onPress={() => router.push("/Screens/Settings")}/>
           <Text style={styles.lang}>EN | GR</Text>
         </View>
       </View>

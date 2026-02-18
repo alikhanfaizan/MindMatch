@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
+import GameController from "@/src/controllers/GameController";
 
 export default function HostSetupScreen() {
   const [rounds, setRounds] = useState(10);
@@ -101,11 +102,14 @@ export default function HostSetupScreen() {
       {/* Start Button */}
       <TouchableOpacity
         style={styles.startButton}
-        onPress={() => router.push("/Screens/WaitingRoom")}
+        onPress={() => {
+          GameController.configureMatch(rounds, time);
+          router.push("/Screens/WaitingRoom");
+        }}
       >
         <Text
           style={styles.startText}
-        //   onPress={() => router.push("/Screens/GamePlay")}
+          //   onPress={() => router.push("/Screens/GamePlay")}
         >
           START
         </Text>
